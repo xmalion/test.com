@@ -10,7 +10,7 @@ pipeline:
     - cd /home/vibrobox/www/skf.vibrobox.com
     - git pull
     when:
-      event: push
+      event: [ push ]
 
   notify-email:
     image: drillster/drone-email
