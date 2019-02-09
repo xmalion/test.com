@@ -1,14 +1,5 @@
 pipeline:
-  restore-cache:
-    # https://github.com/Drillster/drone-volume-cache/blob/fec2a5d0492d4fc22025c0c6bbb5eaf540da1462/DOCS.md
-    image: drillster/drone-volume-cache
-    restore: true
-    mount:
-      - vendor
-    volumes:
-      - /tmp/cache:/cache
-
-   deploy-skf:
+   deploy-test:
     image: appleboy/drone-ssh
     host: 46.4.87.174
     username: vibrobox-deploy
