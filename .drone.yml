@@ -5,6 +5,7 @@ pipeline:
     username: vibrobox-deploy
     port: 34777
     secrets: [ ssh_key ]
+    command_timeout: 100
     script:
     - set -e
     - cd /home/vibrobox/www/skf.vibrobox.com
