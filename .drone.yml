@@ -1,0 +1,42 @@
+pipeline:
+  restore-cache:
+    # https://github.com/Drillster/drone-volume-cache/blob/fec2a5d0492d4fc22025c0c6bbb5eaf540da1462/DOCS.md
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - vendor
+    volumes:
+      - /tmp/cache:/cache
+
+   deploy-skf:
+    image: appleboy/drone-ssh
+    host: 46.4.87.174
+    username: vibrobox-deploy
+    port: 34777
+    secrets: [ ssh_key ]
+    script:
+    - set -e
+    - cd /home/vibrobox/www/skf.vibrobox.com
+    - git pull
+    when:
+      event: push
+
+  notify-email:
+    image: drillster/drone-email
+    secrets: [ email_username, email_password ]
+    host: smtp.gmail.com
+    port: 587
+    from: drone@vibrobox.com
+    when:
+      status: [ failure ]
+      event: [ push ]
+
+services:
+  testdb:
+    image: mariadb:10.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
