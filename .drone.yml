@@ -1,5 +1,5 @@
 pipeline:
-  deploy-test:
+  deploy-1:
     image: appleboy/drone-ssh
     host: 46.4.87.174
     username: vibrobox-deploy
@@ -10,21 +10,6 @@ pipeline:
       - set -e
       - cd /home/vibrobox/www/skf.vibrobox.com
       - git pull
-    when:
-      branch: master
-      event: [ push ]
-
-  deploy-1:
-    image: appleboy/drone-ssh
-    host: 46.4.87.174
-    username: vibrobox-deploy
-    port: 34777
-    secrets: [ ssh_key ]
-    command_timeout: 100
-    script:
-     - set -e
-     - cd /home/vibrobox/www/skf.vibrobox.com
-     - git pull
     when:
       event: [ push ]
 
